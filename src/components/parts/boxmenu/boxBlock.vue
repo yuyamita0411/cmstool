@@ -5,7 +5,6 @@
     >
         <div :class="`box-menu-divide ${keySecond}`" v-for="(sectionValue, sectionKey) in valueSecond" :key="sectionKey" >
             <div :class="`box`" v-for="(boxValue, boxKey) in sectionValue" :key="boxKey" >
-
                 <boxtitleEditor
                 :keySecondSecond="keySecond"
                 :sectionKeySecond="sectionKey"
@@ -19,7 +18,6 @@
                 @stop-editing="stopEditing"
                 @send-data="sendData"
                 />
-
                 <boximgEditor
                 :keySecondSecond="keySecond"
                 :sectionKeySecond="sectionKey"
@@ -34,7 +32,6 @@
                 @stop-editing="stopEditing"
                 @send-data="sendData"
                 />
-
                 <boxmovieEditor
                 :keySecondSecond="keySecond"
                 :sectionKeySecond="sectionKey"
@@ -50,7 +47,6 @@
                 @stop-editing="stopEditing"
                 @send-data="sendData"
                 />
-
                 <boxdescriptionEditor
                 :keySecondSecond="keySecond"
                 :sectionKeySecond="sectionKey"
