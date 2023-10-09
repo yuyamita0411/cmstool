@@ -34,12 +34,11 @@
 
 <script lang="ts">
 /* APIができたら消す */
-import {TEST} from '../module/test';
+import { TEST } from '../module/test';
 
 import { Vue, Options } from "vue-class-component";
-
-import {ENV} from '../module/env';
-import {Function} from '../module/function';
+import { ENV } from '../module/env';
+import { Function } from '../module/function';
 
 import inputButton from '@/components/parts/titlelabel/inputButton.vue'
 import boxBlock from '@/components/parts/boxmenu/boxBlock.vue'
@@ -113,108 +112,13 @@ export default class editMenu extends Vue {
     min-height: 100vh;
     margin: 0 auto;
     background: #ffff;
-}
-.editelem {
-    width: 98%;
-    margin: 0 auto 2rem auto;
-    position: relative;
-}
-.editelem > * {
-    cursor: pointer;
-}
-[class*="for-"],
-.showdata {
-    font-family: "YourFontFamily", sans-serif;
-    display: inline-block;
-    width: calc(100% - 7rem);
-}
-.showdata{
-    padding: 1rem;
-}
-.input-wrapper {
-    position: relative;
-    button {
-        bottom: .5rem;
-        right: 50%;
-        img {
-            width: 100%;
-        }
+    .editelem {
+        width: 98%;
+        margin: 0 auto 2rem auto;
+        position: relative;
     }
-    textarea {
-        width: 100%;
-        border: none;
-        background: rgb(0, 0, 0, .05);
+    .editelem > * {
+        cursor: pointer;
     }
 }
-.trashbutton {
-    bottom: .5rem;
-    right: 5rem;
-
-    img {
-        width: 100%;
-    }
-}
-
-.input-wrapper button,
-.trashbutton,
-.addcontentbutton {
-    cursor: pointer;
-    position: absolute;
-    width: 1.5rem;
-    height: 1.5rem;
-    padding: 0;
-    background: transparent;
-    border: none;
-}
-.addcontent-wrapper{
-    height: 1.5rem;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    bottom: -1rem;
-    .addcontentbutton {
-        bottom: 0;
-        right: 50%;
-
-        img {
-            width: 100%;
-        }
-    }
-    .addcontent-border {
-        width:100%;
-        height: .5px;
-        display: inline-block;
-        background: rgb(0, 0, 0, .5);
-    }
-}
-
-h2,
-.for-h2 {
-    font-size: 1.5rem;
-    margin: 0 0 .5rem 0;
-}
-
-h3,
-.for-h3,
-.for-box-h3 {
-    font-size: 1.17rem;
-    margin: 0 0 .5rem 0;
-}
-
-h4,
-.for-h4 {
-    font-size: 1.05rem;
-    margin: 0 0 .5rem 0;
-}
-
-p,
-.for-p,
-.for-box-description {
-    font-size: 1rem;
-    margin: 0 0 .5rem 0;
-}
-
-.for-box-image {}
-.for-box-movie {}
 </style>

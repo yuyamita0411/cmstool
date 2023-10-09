@@ -41,8 +41,8 @@ import { Vue } from "vue-class-component";
 import { Prop } from 'vue-property-decorator';
 import { watch } from 'vue';
 
-import {Function} from '../../../../module/function';
-import {ENV} from '../../../../module/env';
+import { Function } from '../../../../module/function';
+import { ENV } from '../../../../module/env';
 
 export default class boxmovieEditor extends Vue {
     @Prop({ required: true }) itemkey!: string;

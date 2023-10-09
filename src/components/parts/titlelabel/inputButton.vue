@@ -51,10 +51,10 @@ import { Vue, Options } from "vue-class-component";
 import { Prop } from 'vue-property-decorator';
 import { watch } from 'vue';
 
-import {modal} from '../../../module/store';
+import { modal } from '../../../module/store';
 
-import {Function} from '../../../module/function';
-import {ENV} from '../../../module/env';
+import { Function } from '../../../module/function';
+import { ENV } from '../../../module/env';
 
 import h2tag from './htags/h2.vue';
 import h3tag from './htags/h3.vue';

@@ -17,16 +17,7 @@
 </template>
 
 <style lang="scss">
-body {
-  margin: 0;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import "./views/style.scss";
 nav {
   padding: 4rem .5rem 0 .5rem;
   position: fixed;
@@ -48,6 +39,25 @@ nav {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+  .menu-list-button {
+    width: 2rem;
+    height: 2rem;
+    clear: both;
+    padding: .25rem 1rem 1rem .25rem;
+  }
+  .menu-list-button{
+    box-shadow: 2px 3px 1px -2px rgba(0, 0, 0, 0.3);
+  }
+  .menu-list-button:hover{
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  .menu-list-button,
+  .menu-list-button:hover {
+    transition: all .25s;
+  }
+  .menu-list-button {
+    float: left;
   }
 }
 .nav-open {
@@ -82,30 +92,11 @@ nav {
   width: 3rem;
   height: 3rem;
 }
-.menu-list-button {
-  width: 2rem;
-  height: 2rem;
-  clear: both;
-  padding: .25rem 1rem 1rem .25rem;
-}
 .menuicon {
     img {
       display: inline-block;
       width: 100%;
     }
-}
-.menu-list-button{
-  box-shadow: 2px 3px 1px -2px rgba(0, 0, 0, 0.3);
-}
-.menu-list-button:hover{
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-.menu-list-button,
-.menu-list-button:hover {
-  transition: all .25s;
-}
-.menu-list-button {
-  float: left;
 }
 .contents {
   background: rgb(0, 0, 0, 0.1);
@@ -116,7 +107,7 @@ nav {
 
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
-import {ENV} from './module/env';
+import { ENV } from './module/env';
 import Modal from '@/components/Modal.vue';
 
 @Options({
