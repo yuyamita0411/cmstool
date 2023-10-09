@@ -1,6 +1,7 @@
 <template>
     <div
-    v-if="func.matchesPattern(itemkey, matchpattern)"
+    class="displaytest"
+    v-if="displayCheck(itemkey)"
     @click="getHeight"
     @mouseover="mouseOverWrapper"
     ref="getheight"
@@ -11,19 +12,19 @@
         :data-key="itemkey"
         :data-value="value"
         >
-            <h2tag v-if="tagname == 'h2'" :appendval="value" />
-            <h3tag v-else-if="tagname == 'h3'" :appendval="value" />
-            <h4tag v-else-if="tagname == 'h4'" :appendval="value" />
-            <ptag v-else-if="tagname == 'p'" :appendval="value" />
+            <h2tag v-if="func.matchesPattern(itemkey, EN.tProp['h2']['matchpattern'])" :appendval="value" />
+            <h3tag v-else-if="func.matchesPattern(itemkey, EN.tProp['h3']['matchpattern'])" :appendval="value" />
+            <h4tag v-else-if="func.matchesPattern(itemkey, EN.tProp['h4']['matchpattern'])" :appendval="value" />
+            <ptag v-else-if="func.matchesPattern(itemkey, EN.tProp['p']['matchpattern'])" :appendval="value" />
         </div>
         <div
         v-else-if="isEditing"
         class="input-wrapper showdata">
             <textarea
-                :class="tagfor"
                 v-model="internalValue"
                 @input="handleInput"
                 ref="textheight"
+                :class="`for-${tagname}`"
             >
             </textarea>
             <button @click="stopEditing(itemkey)"><img :src="closeButtonsrc"></button>
@@ -71,10 +72,7 @@ import ptag from './htags/p.vue';
 export default class inputButton extends Vue {
     @Prop({ required: true }) itemkey!: string;
     @Prop({ required: true }) value!: string;
-    @Prop({ required: true }) tagname!: string;
-    @Prop({ required: true }) matchpattern!: string;
     @Prop({ required: true }) isEditing!: boolean;
-    @Prop({ required: true }) tagfor!: string;
 
     internalValue = this.value;
 
@@ -88,6 +86,8 @@ export default class inputButton extends Vue {
     displayTrash = 'hide-trash';
     displayAddButton = 'hide-addbutton';
 
+    tagname = '';
+
     setup(props: any) {
         watch(
             () => props.value,
@@ -95,6 +95,23 @@ export default class inputButton extends Vue {
                 this.internalValue = newValue;
             }
         );
+    }
+
+    displayCheck (key: string) {
+        let flg = false;
+        if (this.func.matchesPattern(key, this.EN.tProp['h2']['matchpattern'])) {
+            flg = true;
+        }
+        if (this.func.matchesPattern(key, this.EN.tProp['h3']['matchpattern'])) {
+            flg = true;
+        }
+        if (this.func.matchesPattern(key, this.EN.tProp['h4']['matchpattern'])) {
+            flg = true;
+        }
+        if (this.func.matchesPattern(key, this.EN.tProp['p']['matchpattern'])) {
+            flg = true;
+        }
+        return flg;
     }
 
     getHeight () {
@@ -108,6 +125,7 @@ export default class inputButton extends Vue {
     }
 
     onStartEditing(key: string, value: string) {
+        this.tagname = this.func.checkRegArr(this.itemkey, this.EN.bProp);
         this.internalValue = value;
         this.$emit('start-editing', key, value);
     }
@@ -137,7 +155,7 @@ export default class inputButton extends Vue {
         this.$emit('stop-editing', key);
     }
 
-    handleInput() {
+    handleInput(e: any) {
         if (this.tagname == 'p') {
             const textarea: any = this.$refs.textheight;
             textarea.style.height = 'auto';

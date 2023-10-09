@@ -1,48 +1,14 @@
 <template>
     <div class="edit-wrapper">
         <div v-for="(value, key, index) in jsonData" :key="key" class="editelem">
-            <!-- h2 -->
+            <!-- inputButton -->
             <inputButton :itemkey="key" :value="value" :index="index" :isEditing="isEditing[key] ? isEditing[key] : false"
-            :tagname="env.tProp['h2']['tagname']" :tagfor="env.tProp['h2']['tagfor']"
-            :matchpattern="env.tProp['h2']['matchpattern']"
             @start-editing="startEditing"
             @stop-editing="stopEditing"
             @delete-element="deleteElement(jsonData, key)"
             @update:value="updateValue(jsonData, $event, key)"
             />
-
-            <!-- h3 -->
-            <inputButton :itemkey="key" :value="value" :index="index" :isEditing="isEditing[key] ? isEditing[key] : false"
-            :tagname="env.tProp['h3']['tagname']" :tagfor="env.tProp['h3']['tagfor']"
-            :matchpattern="env.tProp['h3']['matchpattern']"
-            @start-editing="startEditing"
-            @stop-editing="stopEditing"
-            @delete-element="deleteElement(jsonData, key)"
-            @update:value="updateValue(jsonData, $event, key)"
-            />
-            <!-- h3 -->
-
-            <!-- h4 -->
-            <inputButton :itemkey="key" :value="value" :index="index" :isEditing="isEditing[key] ? isEditing[key] : false"
-            :tagname="env.tProp['h4']['tagname']" :tagfor="env.tProp['h4']['tagfor']"
-            :matchpattern="env.tProp['h4']['matchpattern']"
-            @start-editing="startEditing"
-            @stop-editing="stopEditing"
-            @delete-element="deleteElement(jsonData, key)"
-            @update:value="updateValue(jsonData, $event, key)"
-            />
-            <!-- h4 -->
-
-            <!-- p -->
-            <inputButton :itemkey="key" :value="value" :index="index" :isEditing="isEditing[key] ? isEditing[key] : false"
-            :tagname="env.tProp['p']['tagname']" :tagfor="env.tProp['p']['tagfor']"
-            :matchpattern="env.tProp['p']['matchpattern']"
-            @start-editing="startEditing"
-            @stop-editing="stopEditing"
-            @delete-element="deleteElement(jsonData, key)"
-            @update:value="updateValue(jsonData, $event, key)"
-            />
-            <!-- p -->
+            <!-- inputButton -->
 
             <!-- box menu -->
             <boxBlock

@@ -34,4 +34,11 @@ export class ENV {
             "matchpattern": "boxmenu"
         }
     }
+    bProp = {
+        "contenttitle": "h2",
+        "contentsecondttitle": "h3",
+        "contentthirdttitle": "h4",
+        "content": "p",
+        "boxmenu": "boxmenu"
+    }
 }

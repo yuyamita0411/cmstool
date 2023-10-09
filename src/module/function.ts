@@ -16,4 +16,20 @@ export class Function {
         }
         return obj;
     }
+
+    checkRegArr (key: string, prop: any) {
+      const itemkeyPattern = key.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+      let matchedValue = null;
+      for (const key in prop) {
+          if (Object.prototype.hasOwnProperty.call(prop, key)) {
+              const value = prop[key];
+              const regex = new RegExp(`.*${key}.*`);
+              if (regex.test(itemkeyPattern)) {
+                  matchedValue = value;
+                  break;
+              }
+          }
+      }
+      return matchedValue;
+    }
 }
