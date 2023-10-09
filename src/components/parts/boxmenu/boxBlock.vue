@@ -72,7 +72,6 @@
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
 import { Prop } from 'vue-property-decorator';
-import { watch } from 'vue';
 
 import boxtitleEditor from '@/components/parts/boxmenu/blocks/boxtitle.vue'
 import boximgEditor from '@/components/parts/boxmenu/blocks/boximg.vue'
@@ -94,8 +93,8 @@ export default class boxBlock extends Vue {
     @Prop({ required: true }) valueSecond!: string;
     @Prop({ required: true }) matchpatternSecond!: string;
     @Prop({ required: true }) indexSecond!: number;
-    @Prop() isEditingSecond!: any;
-    @Prop() jsonDataSecond!: any;
+    @Prop() isEditingSecond!: boolean;
+    @Prop() jsonDataSecond!: object;
 
     func = new Function();
 
@@ -103,17 +102,13 @@ export default class boxBlock extends Vue {
         [key: string]: boolean;
     } = {};
 
-    //internalValue = this.dataval;
-
-    startEditing(key: any, value: any) {
+    startEditing(key: string) {
         this.isEditing = { ...this.isEditing, [key]: true };
-        //this.inputValues = { ...this.inputValues, [key]: value };
-        //this.jsonData = this.inputValues;
     }
-    stopEditing(key: any) {
+    stopEditing(key: string) {
         this.isEditing = { ...this.isEditing, [key]: false };
     }
-    updateValue(target: any, newValue: any, key: any) {
+    updateValue(target: any, newValue: string, key: string) {
         target[key] = newValue;
     }
     sendData(e: any) {

@@ -71,11 +71,9 @@
 import {TEST} from '../module/test';
 
 import { Vue, Options } from "vue-class-component";
-import { Prop } from 'vue-property-decorator';
 
 import {ENV} from '../module/env';
 import {Function} from '../module/function';
-import {MyNestedObject} from '../module/type';
 
 import inputButton from '@/components/parts/titlelabel/inputButton.vue'
 import boxBlock from '@/components/parts/boxmenu/boxBlock.vue'
@@ -92,11 +90,11 @@ export default class editMenu extends Vue {
 
     env = new ENV();
     func = new Function();
-    jsonData: any;
-    jsonData2: any;
+    jsonData: object = {};
+    jsonData2: object = {};
 
-    inputValNow: any;
-    inputKeyNow: any;
+    inputValNow!: string;
+    inputKeyNow!: string;
 
     isEditing: {
         [key: string]: boolean;
@@ -117,24 +115,24 @@ export default class editMenu extends Vue {
 
     getMinedData(e: Event){
         const target = e.target as HTMLElement
-        this.inputValNow = target.dataset.value;
-        this.inputKeyNow = target.dataset.key;
+        this.inputValNow = target.dataset && target.dataset.value ? target.dataset.value : '';
+        this.inputKeyNow = target.dataset && target.dataset.key ? target.dataset.key : '';
     }
 
-    startEditing(key: any, value: any) {
+    startEditing(key: string, value: string) {
         this.isEditing = { ...this.isEditing, [key]: true };
         this.inputValues = { ...this.inputValues, [key]: value };
         this.jsonData = this.inputValues;
     }
-    stopEditing(key: any) {
+    stopEditing(key: string) {
         this.isEditing = { ...this.isEditing, [key]: false };
     }
 
-    deleteElement(target: any, key: any) {
+    deleteElement(target: any, key: string) {
         delete target[key];
     }
 
-    updateValue(target: any, newValue: any, key: any) {
+    updateValue(target: any, newValue: string, key: string) {
         target[key] = newValue;
     }
     updateBlockVal(target: any, e: any){

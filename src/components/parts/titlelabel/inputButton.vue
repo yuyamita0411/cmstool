@@ -49,7 +49,6 @@
 import { Vue, Options } from "vue-class-component";
 import { Prop } from 'vue-property-decorator';
 import { watch } from 'vue';
-import { mapMutations, mapState } from 'vuex';
 
 import {modal} from '../../../module/store';
 
