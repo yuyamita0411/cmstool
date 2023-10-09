@@ -1,7 +1,7 @@
 <template>
     <div
     v-if="func.matchesPattern(keySecond, matchpatternSecond)"
-    :class="`${keySecond} spboxwrapper-${indexSecond} showdata`"
+    :class="`${keySecond} spboxwrapper-${indexSecond} boxwrapper-3 showdata`"
     >
         <div :class="`box-menu-divide ${keySecond}`" v-for="(sectionValue, sectionKey) in valueSecond" :key="sectionKey" >
             <div :class="`box`" v-for="(boxValue, boxKey) in sectionValue" :key="boxKey" >
@@ -103,12 +103,12 @@ export default class boxBlock extends Vue {
         [key: string]: boolean;
     } = {};
 
-    internalValue = this.dataval;
+    //internalValue = this.dataval;
 
     startEditing(key: any, value: any) {
         this.isEditing = { ...this.isEditing, [key]: true };
-        this.inputValues = { ...this.inputValues, [key]: value };
-        this.jsonData = this.inputValues;
+        //this.inputValues = { ...this.inputValues, [key]: value };
+        //this.jsonData = this.inputValues;
     }
     stopEditing(key: any) {
         this.isEditing = { ...this.isEditing, [key]: false };
@@ -126,4 +126,57 @@ export default class boxBlock extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.box-menu-divide {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1rem;
+    .box {
+        border-left: solid 1px #424479;
+        border-bottom: solid 1px #424479;
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        float: left;
+    }
+    .box-header {
+        .box-title {
+            color: #424479;
+            background-color: #fcb900;
+            font-size: 18px;
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: .5rem;
+            margin-bottom: 0;
+            height: calc((18px * 1.25) + 1rem);
+            border-radius: 0;
+        }
+    }
+    .imgWrapper {
+        width: 100%;
+        display: inline-block;
+        background: #ffffff;
+        text-align: center;
+    }
+    .box-content {
+        padding: 0;
+        .box-text {
+            color: #424479;
+            background-color: #f3eeee;
+            font-size: 16px;
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: .5rem;
+            border-radius: 0;
+            float: left;
+            width: 100%;
+            height: calc((16px * 1.25) + 1rem);
+            margin-bottom: 0;
+        }
+    }
+}
+@media (min-width: 768px){
+    .boxwrapper-3 .box-menu-divide > .box {
+        width: calc((100% - 4px) / 3);
+    }
+}
 </style>
