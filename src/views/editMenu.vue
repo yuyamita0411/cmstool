@@ -1,12 +1,12 @@
 <template>
     <div class="edit-wrapper">
-        <div v-for="(value, key, index) in jsonData" :key="key" class="editelem">
+        <div v-for="(value, key, index) in jsondata" :key="key" class="editelem">
             <!-- inputButton -->
             <inputButton :itemkey="key" :value="value" :index="index" :isEditing="isEditing[key] ? isEditing[key] : false"
             @start-editing="startEditing"
             @stop-editing="stopEditing"
-            @delete-element="deleteElement(jsonData, key)"
-            @update:value="updateValue(jsonData, $event, key)"
+            @delete-element="deleteElement(jsondata, key)"
+            @update:value="updateValue(jsondata, $event, key)"
             />
             <!-- inputButton -->
 
@@ -15,19 +15,18 @@
             :keySecond="key" :valueSecond="value" :indexSecond="index"
             :matchpatternSecond="env.tProp['boxmenu']['matchpattern']"
             :isEditingSecond="isEditing"
-            :jsonDataSecond="jsonData"
             @start-editing="startEditing"
             @stop-editing="stopEditing"
-            @update:title="updateBlockVal(jsonData, $event)"
-            @update:image="updateBlockVal(jsonData, $event)"
-            @update:movie="updateBlockVal(jsonData, $event)"
-            @update:description="updateBlockVal(jsonData, $event)"
+            @update:title="updateBlockVal(jsondata, $event)"
+            @update:image="updateBlockVal(jsondata, $event)"
+            @update:movie="updateBlockVal(jsondata, $event)"
+            @update:description="updateBlockVal(jsondata, $event)"
             />
             <!-- box menu -->
         </div>
         <div class="meta-setting-area">
-            <input type="text" :value="jsonData['pagetitle']">
-            <input type="text" :value="jsonData['description']">
+            <input type="text" :value="jsondata['pagetitle']">
+            <input type="text" :value="jsondata['description']">
         </div>
     </div>
 </template>
@@ -40,6 +39,7 @@ import { Vue, Options } from "vue-class-component";
 import { Component, Watch } from 'vue-property-decorator';
 
 import { mapState, mapMutations } from 'vuex';
+import {store} from '../module/store';
 
 import { ENV } from '../module/env';
 import { Function } from '../module/function';
@@ -53,7 +53,7 @@ import boxBlock from '@/components/parts/boxmenu/boxBlock.vue'
         boxBlock
     },
     computed: {
-        ...mapState(['modaldisplaystatus', 'whichtag'])
+        ...mapState(['modaldisplaystatus', 'whichtag', 'jsondata'])
     }
 })
 export default class editMenu extends Vue {
@@ -62,8 +62,6 @@ export default class editMenu extends Vue {
 
     env = new ENV();
     func = new Function();
-    jsonData: object = {};
-    jsonData2: object = {};
 
     inputValNow!: string;
     inputKeyNow!: string;
@@ -77,7 +75,8 @@ export default class editMenu extends Vue {
     } = {};
 
     created () {
-        this.jsonData = this.test.jsondata;
+        store.commit('setJsonData', this.test.jsondata);
+
         const deepCopy1 = this.test.jsondata;
         const deepCopy2 = JSON.parse(JSON.stringify(this.test.jsondata));
 
@@ -94,7 +93,7 @@ export default class editMenu extends Vue {
     startEditing(key: string, value: string) {
         this.isEditing = { ...this.isEditing, [key]: true };
         this.inputValues = { ...this.inputValues, [key]: value };
-        this.jsonData = this.inputValues;
+        store.commit('setJsonData', this.inputValues);
     }
     stopEditing(key: string) {
         this.isEditing = { ...this.isEditing, [key]: false };
@@ -113,10 +112,7 @@ export default class editMenu extends Vue {
 
     @Watch('whichtag')
     onWhichTagChanged(newVal: string, oldVal: string) {
-        this.jsonData = {
-            ...this.jsonData,
-            [newVal]: ''
-        };
+        store.commit('addValJsonData', newVal);
     }
 }
 </script>

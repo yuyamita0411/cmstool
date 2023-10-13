@@ -69,6 +69,9 @@
 import { Vue, Options } from "vue-class-component";
 import { Prop } from 'vue-property-decorator';
 
+import { store } from '../../../module/store';
+import { mapState, mapMutations } from 'vuex';
+
 import boxtitleEditor from '@/components/parts/boxmenu/blocks/boxtitle.vue'
 import boximgEditor from '@/components/parts/boxmenu/blocks/boximg.vue'
 import boxmovieEditor from '@/components/parts/boxmenu/blocks/boxmovie.vue'
@@ -82,6 +85,9 @@ import {Function} from '../../../module/function';
         boximgEditor,
         boxmovieEditor,
         boxdescriptionEditor,
+    },
+    computed: {
+        ...mapState(['additemkey', 'jsondata'])
     }
 })
 export default class boxBlock extends Vue {

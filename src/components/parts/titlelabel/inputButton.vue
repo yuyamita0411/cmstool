@@ -73,7 +73,7 @@ import ptag from './htags/p.vue';
         ptag
     },
     computed: {
-        ...mapState(['additemkey'])
+        ...mapState(['additemkey', 'jsondata'])
     }
 })
 export default class inputButton extends Vue {

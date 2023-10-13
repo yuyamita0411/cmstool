@@ -4,13 +4,15 @@ interface StoreState {
     modaldisplaystatus: string;
     whichtag: string;
     additemkey: string;
+    jsondata: any;
 }
 
 export const store = createStore<StoreState>({
     state: {
         modaldisplaystatus: 'modal-hide',
         whichtag: "",
-        additemkey: ""
+        additemkey: "",
+        jsondata: {}
     },
     mutations: {
         toggleModal(state, display: boolean) {
@@ -21,6 +23,15 @@ export const store = createStore<StoreState>({
         },
         setItemKey(state, itemkey: string) {
             state.additemkey = itemkey;
+        },
+        setJsonData(state, data: any) {
+            state.jsondata = data;
+        },
+        addValJsonData (state, newVal: string): void {
+            state.jsondata = {
+                ...state.jsondata,
+                [newVal]: ''
+            };
         }
     }
 });
