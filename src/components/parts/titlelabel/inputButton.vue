@@ -12,6 +12,7 @@
         :data-key="itemkey"
         :data-value="value"
         >
+        <!-- itemkey = contenttitle1 -->
             <h2tag v-if="func.matchesPattern(itemkey, EN.tProp['h2']['matchpattern'])" :appendval="value" />
             <h3tag v-else-if="func.matchesPattern(itemkey, EN.tProp['h3']['matchpattern'])" :appendval="value" />
             <h4tag v-else-if="func.matchesPattern(itemkey, EN.tProp['h4']['matchpattern'])" :appendval="value" />
@@ -39,7 +40,9 @@
             <button :class="`addcontentbutton ${displayAddButton}`"
             @click="addBlockFunc"
             ><img
-            :src="addcontenticon"></button>
+            :src="addcontenticon"
+            :data-itemkey="itemkey"
+            @click="getItemKey"></button>
             <span class="addcontent-border"></span>
         </div>
         <button :class="`trashbutton ${displayTrash}`" @click="deleteElement(itemkey)"><img :src="trashicon"></button>
@@ -51,7 +54,8 @@ import { Vue, Options } from "vue-class-component";
 import { Prop } from 'vue-property-decorator';
 import { watch } from 'vue';
 
-import { modal } from '../../../module/store';
+import { store } from '../../../module/store';
+import { mapState, mapMutations } from 'vuex';
 
 import { Function } from '../../../module/function';
 import { ENV } from '../../../module/env';
@@ -67,6 +71,9 @@ import ptag from './htags/p.vue';
         h3tag,
         h4tag,
         ptag
+    },
+    computed: {
+        ...mapState(['additemkey'])
     }
 })
 export default class inputButton extends Vue {
@@ -151,8 +158,13 @@ export default class inputButton extends Vue {
     }
 
     addBlockFunc (key: string) {
-        modal.commit('showModal');
+        store.commit('toggleModal', true);
         this.$emit('stop-editing', key);
+    }
+
+    getItemKey (e: Event) {
+        const target = e.target as HTMLElement;
+        store.commit('setItemKey', target.dataset.itemkey);
     }
 
     handleInput(e: any) {

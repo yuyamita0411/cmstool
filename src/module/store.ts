@@ -1,19 +1,26 @@
 import { createStore } from 'vuex';
 
-interface State {
+interface StoreState {
     modaldisplaystatus: string;
+    whichtag: string;
+    additemkey: string;
 }
 
-export const modal = createStore<State>({
+export const store = createStore<StoreState>({
     state: {
-        modaldisplaystatus: 'modal-hide'
+        modaldisplaystatus: 'modal-hide',
+        whichtag: "",
+        additemkey: ""
     },
     mutations: {
-        showModal(state) {
-            state.modaldisplaystatus = 'modal-show';
+        toggleModal(state, display: boolean) {
+            state.modaldisplaystatus = display ? 'modal-show' : 'modal-hide';
         },
-        hideModal(state) {
-            state.modaldisplaystatus = 'modal-hide';
+        setTag(state, tag: string) {
+            state.whichtag = tag;
+        },
+        setItemKey(state, itemkey: string) {
+            state.additemkey = itemkey;
         }
     }
 });

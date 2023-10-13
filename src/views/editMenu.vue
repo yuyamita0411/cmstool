@@ -37,6 +37,10 @@
 import { TEST } from '../module/test';
 
 import { Vue, Options } from "vue-class-component";
+import { Component, Watch } from 'vue-property-decorator';
+
+import { mapState, mapMutations } from 'vuex';
+
 import { ENV } from '../module/env';
 import { Function } from '../module/function';
 
@@ -47,6 +51,9 @@ import boxBlock from '@/components/parts/boxmenu/boxBlock.vue'
     components: {
         inputButton,
         boxBlock
+    },
+    computed: {
+        ...mapState(['modaldisplaystatus', 'whichtag'])
     }
 })
 export default class editMenu extends Vue {
@@ -102,6 +109,14 @@ export default class editMenu extends Vue {
     }
     updateBlockVal(target: any, e: any){
         target[e["key"]][e["sectionKey"]][e["boxKey"]][e["partkey"]] = e["value"];
+    }
+
+    @Watch('whichtag')
+    onWhichTagChanged(newVal: string, oldVal: string) {
+        this.jsonData = {
+            ...this.jsonData,
+            [newVal]: ''
+        };
     }
 }
 </script>

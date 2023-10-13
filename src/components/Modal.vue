@@ -2,11 +2,11 @@
     <div :class="`modal-wrapper ${modaldisplaystatus}`">
         <button :class="`modal-close-button`" @click="modalClose"><img :src="closeButtonsrc"></button>
         <div :class="`modal`">
-            <p :class="`modalmenu`" @click="modalClose">h2</p>
-            <p :class="`modalmenu`" @click="modalClose">h3</p>
-            <p :class="`modalmenu`" @click="modalClose">h4</p>
-            <p :class="`modalmenu`" @click="modalClose">p</p>
-            <p :class="`modalmenu`" @click="modalClose">box menu</p>
+            <p :class="`modalmenu`" :data-itemkey="EN.tProp.h2.matchpattern" @click="clickTagButton">h2</p>
+            <p :class="`modalmenu`" :data-itemkey="EN.tProp.h3.matchpattern" @click="clickTagButton">h3</p>
+            <p :class="`modalmenu`" :data-itemkey="EN.tProp.h4.matchpattern" @click="clickTagButton">h4</p>
+            <p :class="`modalmenu`" :data-itemkey="EN.tProp.p.matchpattern" @click="clickTagButton">p</p>
+            <p :class="`modalmenu`" :data-itemkey="EN.tProp.boxmenu.matchpattern" @click="clickTagButton">box menu</p>
         </div>
     </div>
 </template>
@@ -16,21 +16,39 @@ import { Vue } from 'vue-class-component';
 import { Options } from 'vue-class-component';
 import { mapState, mapMutations } from 'vuex';
 
-import {modal} from '../module/store';
-
+import {store} from '../module/store';
 import {ENV} from '../module/env';
 
 @Options({
     computed: {
-        ...mapState(['modaldisplaystatus'])
+        ...mapState(['modaldisplaystatus', 'whichtag', 'additemkey'])
     }
 })
 export default class Modal extends Vue {
-    EN = new ENV();
+    EN: any = new ENV();
     closeButtonsrc = this.EN.closebutton;
+    tagname = '';
 
-    modalClose() {
-        modal.commit('hideModal');
+    clickTagButton (e: Event) {
+        this.modalClose(e);
+        this.chooseWhichTag(e);
+    }
+
+    modalClose(e: Event) {
+        store.commit('toggleModal', false);
+    }
+    chooseWhichTag(e: Event) {
+        const target = e.target as HTMLElement;
+        store.commit('setTag', this.EN.tProp[target.innerText]["matchpattern"]);
+/*
+        1. クリックした瞬間に+ボタンのdata-itemkeyを取得する additemkey
+        2. data-itemkeyをキーに持つ値がjsonDataでの中でどの位置(何番目)かを取得する
+        3. サイドバーをクリックした時のdata-itemkeyを取得する
+        4. {3で取得した文字列}{数字}の形式になってるキーがjsonDataの中の3で取得した数字番目までの中にいくつ含まれるかを取得する
+        5. 4で取得した数字に1を足して{3で取得した文字列}{4で取得した数字+1}をキーとする
+        6. jsonDataの中の3で取得した数字番目以降の{3で取得した文字列}{数字}の形式になってるキーの数字を1+する
+        7. 新しい値をjsonDataの中へ追加する
+*/
     }
 }
 </script>
