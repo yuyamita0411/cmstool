@@ -22,7 +22,7 @@ import { ENV } from '../module/env';
 
 @Options({
     computed: {
-        ...mapState(['modaldisplaystatus', 'whichtag', 'additemkey'])
+        ...mapState(['modaldisplaystatus', 'whichtag', 'additemkey', 'jsondata'])
     }
 })
 export default class Modal extends Vue {
@@ -38,17 +38,50 @@ export default class Modal extends Vue {
         store.commit('toggleModal', false);
     }
     chooseWhichTag(e: Event) {
-        const target = e.target as HTMLElement;
-        store.commit('setTag', this.EN.tProp[target.innerText]["matchpattern"]);
 /*
         1. クリックした瞬間に+ボタンのdata-itemkeyを取得する store.state.additemkey
-        2. data-itemkeyをキーに持つ値がjsonDataでの中でどの位置(何番目)かを取得する
+        2. data-itemkeyをキーに持つ値がjsonDataでの中でどの位置(何番目)かを取得する index
         3. サイドバーをクリックした時のdata-itemkeyを取得する target.dataset.itemkey
         4. {3で取得した文字列}{数字}の形式になってるキーがjsonDataの中の3で取得した数字番目までの中にいくつ含まれるかを取得する
         5. 4で取得した数字に1を足して{3で取得した文字列}{4で取得した数字+1}をキーとする
         6. jsonDataの中の3で取得した数字番目以降の{3で取得した文字列}{数字}の形式になってるキーの数字を1+する
         7. 新しい値をjsonDataの中へ追加する
 */
+        const target = e.target as HTMLElement;
+        store.commit('setTag', this.EN.tProp[target.innerText]["matchpattern"]);
+
+        const regex = new RegExp(target.dataset.itemkey + "\\d*$");
+        const keys = Object.keys(store.state.jsondata);
+
+        let extractedNumber = 1;
+        let firstHalf: any = {}
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            firstHalf[key] = store.state.jsondata[key];
+            if (regex.test(key)) {
+                extractedNumber = Number(key.match(/\d+/g)) + 1;
+            }
+            if (key === store.state.additemkey) {
+                break;
+            }
+        }
+        firstHalf[`${target.dataset.itemkey}${extractedNumber}`] = '';
+
+        let firstKeys = Object.keys(firstHalf);
+        let lastHalf: any = {}
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (!firstKeys.includes(key)) {
+                if (regex.test(key)) {
+                    let nextnum = Number(key.match(/\d+/g)) + 1;
+                    let newKey = `${target.dataset.itemkey}${nextnum}`;
+                    lastHalf[newKey] = store.state.jsondata[key];
+                } else {
+                    lastHalf[key] = store.state.jsondata[key];
+                }
+            }
+        }
+        store.state.jsondata = { ...firstHalf, ...lastHalf };
     }
 }
 </script>
